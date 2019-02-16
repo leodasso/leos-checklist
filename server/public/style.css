@@ -1,0 +1,18 @@
+.main {
+    background-color: rgb(32, 32, 32);
+    color: rgb(134, 130, 125)
+}
+
+.task-box {
+    border-style: solid;
+    border-width: 1px;
+    border-color: black;
+    padding: 4px 12px;
+}
+
+.task-box input {
+    width: 90%;
+    background-color: black;
+    border-style: none;
+    color: rgb(134, 130, 125);
+}
