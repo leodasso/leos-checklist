@@ -14,6 +14,8 @@
     color: var(--hero-color);
     transition: .1s;
     transform: skewX(-12deg);
+
+    border-radius: 20px 0 20px 0;
 }
 
 .task-box.hover {
@@ -57,4 +59,6 @@
     width: 75px;
     height: 25px;
     text-align: center;
+    border-radius: 0 0 12px 0;
+
 }
