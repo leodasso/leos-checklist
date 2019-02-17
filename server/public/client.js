@@ -1,21 +1,46 @@
 $(document).ready(onReady);
 
 // setup date formatter
-var dateFormat = { year: 'numeric', month: 'long', day: 'numeric' };
+const dateFormat = { year: 'numeric', month: 'long', day: 'numeric' };
 
 function onReady() {
 
-    // fetch the todo list from the server so it can be populated
-    // when the page loads.
+    // fetch the todo list from the server (so it can be populated on the DOM)
     fetchTodoItems();
 
-    // create button listeners
+    /*      |----------------------------------------|
+            |    ~~~~create button listeners~~~~~    |
+            |________________________________________| */
     // 'new item' button
     $('#checklist-container').on('click', '.new-button', sendNewTodo);
 
     // 'delete' button
     $('#checklist-container').on('click', '.delete-button', deleteItem);
 
+    // 'toggle' button
+    $('#checklist-container').on('click', '.toggle-button', toggleTodoItem);
+}
+
+// Toggles the 'complete' status of the item. If it's complete, uncompletes,
+// and if it's not complete, completes it. 
+function toggleTodoItem() {
+
+    // find the taskbox which is the parent of this button. It contains the data
+    const taskBox = $(this).closest('.task-box');
+
+    const isComplete    = taskBox.data().complete;
+    const id            = taskBox.data().id;
+
+    console.log(isComplete);
+    
+
+    $.ajax({
+        url: `/todo-list/${id}`,
+        type: 'PUT',
+        data: {complete: isComplete
+        }
+    }).then(fetchTodoItems);
+    
 }
 
 // Fetches all the todo items from the server, and calls rebuild
@@ -78,9 +103,13 @@ function rebuildTodoList(todoArray) {
         const date = new Date(element.date);
         const formattedDate = date.toLocaleDateString("en-US", dateFormat);
 
+        // determine which classes to put based on if it's complete or not
+        let classes = 'task-box';
+        if (element.complete) classes += ' complete';
+
         const html = 
-            `<div class="task-box" data-id="${element.id}">
-                <button>Toggle</button>
+            `<div class="${classes}" data-id="${element.id}" data-complete="${element.complete}">
+                <button class="toggle-button">Toggle</button>
                 <button class="delete-button">X</button>
                 <div>${formattedDate}</div>
                 <p>${element.descr}</p>

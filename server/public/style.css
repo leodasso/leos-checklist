@@ -10,6 +10,11 @@
     padding: 4px 12px;
 }
 
+.task-box.complete {
+
+    background-color: red;
+}
+
 .task-box input {
     width: 90%;
     background-color: black;

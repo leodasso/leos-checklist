@@ -17,7 +17,9 @@ app.use(bodyParser({urlencoded: true}));
 // Route for the client to get the full list of todos from the database.
 app.get('/todo-list', (req, resp) => {
     // Query the database for our full todo list
-    pool.query(`SELECT * FROM "checklist";`)
+    pool.query(`
+        SELECT * FROM "checklist"
+        ORDER BY "id";`)
     .then(
         response => {
             resp.send(response.rows);
@@ -68,6 +70,34 @@ app.delete('/todo-list/:id', (req, resp) => {
     .catch(
         error => {
             console.log('error deleting ID ' + id, error);
+            resp.sendStatus(500);
+        }
+    );
+});
+
+
+app.put('/todo-list/:id', (req, resp) => {
+
+    const id = req.params.id;
+    const isComplete = req.body.complete;
+
+    // javascript seems to interpret SQL bools as strings because reasons. 
+    //So here's a strict conversion so that we can toggle it.
+    let isCompleteBool = (isComplete === 'true');
+
+    pool.query(`
+        UPDATE "checklist"
+        SET "complete" = $1
+        WHERE "id" = $2`, [!isCompleteBool, id])
+    .then(
+        result => {
+            resp.sendStatus(204);
+        }
+    )
+    .catch(
+        error => {
+            console.log('error setting complete state to ' + isComplete 
+            + ' on ID ' + id, error);
             resp.sendStatus(500);
         }
     );
