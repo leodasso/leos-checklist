@@ -45,56 +45,6 @@ hr {
     flex-direction: column;
 }
 
-.task-box {
-
-    padding: 8px 8px 8px 32px;
-    /* padding: 8px 32px; */
-    margin: 2px;
-
-    font-size: 16px;
-
-    border-style: solid;
-    border-width: 1px;
-    border-color: rgba(0, 0, 0, 0);
-
-    color: var(--hero-color);
-    transition: .2s;
-    transform: skewX(-12deg);
-
-}
-
-.task-box.hover {
-    border-color: var(--hero-color-fade);
-    transform: translateY(-2px) skewX(-12deg);
-    background-color: black;
-}
-
-.task-box.active {
-    background-color: blue;
-}
-
-.task-box-mainline {
-    width: 100%;
-    display: inline-flex;
-    justify-content: space-between;
-}
-
-.task-box-mainline p {
-    width: 85%;
-}
-
-.task-date {
-    font-size: 11px;
-    color: var(--date-color);
-}
-
-.task-box.complete {
-    color: var(--secondary-color);
-}
-
-.task-box.task-box.complete p {
-    text-decoration: line-through;
-}
 
 input {
     width: 100%;
@@ -111,13 +61,6 @@ input::placeholder {
     color: var(--hero-color-fade);
 }
 
-.task-box button {
-
-    align-self: flex-end;
-    width: 75px;
-    height: 25px;
-    text-align: center;
-}
 
 .new-task {
     margin: 44px 2px;
