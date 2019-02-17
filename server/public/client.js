@@ -9,8 +9,13 @@ function onReady() {
     // when the page loads.
     fetchTodoItems();
 
-    // create a listener for the 'new item' button
+    // create button listeners
+    // 'new item' button
     $('#checklist-container').on('click', '.new-button', sendNewTodo);
+
+    // 'delete' button
+    $('#checklist-container').on('click', '.delete-button', deleteItem);
+
 }
 
 // Fetches all the todo items from the server, and calls rebuild
@@ -75,9 +80,10 @@ function rebuildTodoList(todoArray) {
 
         const html = 
             `<div class="task-box" data-id="${element.id}">
-                <button>Complete</button>
+                <button>Toggle</button>
+                <button class="delete-button">X</button>
                 <div>${formattedDate}</div>
-                <input type="text" value="${element.descr}">
+                <p>${element.descr}</p>
             </div>
         `;
 
@@ -92,4 +98,22 @@ function rebuildTodoList(todoArray) {
         </div>`;
 
     container.append(newItemHtml);
+}
+
+function deleteItem() {
+
+    const taskBox = $(this).closest('.task-box');
+    const id = taskBox.data().id;
+
+    $.ajax({
+        url: '/todo-list/' + id,
+        method: 'DELETE'
+    })
+    .then(fetchTodoItems)
+    .catch(
+        error => {
+            console.log('there was an error deleting from the server', error);
+            window.alert('There was a problem deleting this item! Please try again later.');
+        }
+    )
 }

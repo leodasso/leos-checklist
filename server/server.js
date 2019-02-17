@@ -13,6 +13,7 @@ app.listen(PORT, () => {
 app.use(express.static('server/public'));
 app.use(bodyParser({urlencoded: true}));
 
+
 // Route for the client to get the full list of todos from the database.
 app.get('/todo-list', (req, resp) => {
     // Query the database for our full todo list
@@ -49,6 +50,24 @@ app.post('/todo-list', (req, resp) => {
     .catch(
         error => {
             console.log('error when posting new element to database', req.body, error);
+            resp.sendStatus(500);
+        }
+    );
+});
+
+
+app.delete('/todo-list/:id', (req, resp) => {
+
+    const id = req.params.id;
+    pool.query(`DELETE FROM "checklist" WHERE "id" = $1`, [id])
+    .then(
+        result => {
+            resp.sendStatus(204);
+        }
+    )
+    .catch(
+        error => {
+            console.log('error deleting ID ' + id, error);
             resp.sendStatus(500);
         }
     );
