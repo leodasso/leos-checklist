@@ -25,6 +25,11 @@ function onReady() {
     //  hover / un-hover
     $('#checklist-container').on('mouseenter', '.toggle-button', mouseEnterTodoItem);
     $('#checklist-container').on('mouseleave', '.toggle-button', mouseLeaveTodoItem);
+
+    // mousedown mouseup
+    $('#checklist-container').on('mousedown', '.toggle-button', mouseDownTodoItem);
+    $('#checklist-container').on('mouseup', '.toggle-button', mouseUpTodoItem);
+
 }
 
 function mouseEnterTodoItem() {
@@ -35,6 +40,17 @@ function mouseEnterTodoItem() {
 function mouseLeaveTodoItem() {
     
     this.classList.remove('hover');
+}
+
+function mouseDownTodoItem() {
+
+    this.classList.add('active');
+    this.classList.remove('hover');
+}
+
+function mouseUpTodoItem() {
+
+    this.classList.remove('active');
 }
 
 // The database has a list of placeholders that we can show in the 
@@ -173,7 +189,6 @@ function getInputHtml() {
         // choose a random placeholder
         const randIndex = Math.floor(Math.random() * placeholderArray.length);
         placeholder = placeholderArray[randIndex].text;
-        console.log(placeholder);
     }
 
     return `<div class="new-task">

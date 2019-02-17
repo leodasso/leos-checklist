@@ -23,7 +23,9 @@
 }
 
 .task-box.active {
-    background-color: blue;
+    border-color: var(--hero-color);
+    background-color: var(--hero-color-bg);
+    transform: translateY(4px)  skewX(-12deg);
 }
 
 .task-box-mainline {

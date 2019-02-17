@@ -2,6 +2,7 @@
 :root {
     --hero-color: rgb(146, 216, 105);
     --hero-color-fade: rgba(146, 216, 105, .7);
+    --hero-color-bg: rgba(146, 216, 105, .3);
     --secondary-color: rgb(134, 130, 125);
     --date-color: rgb(100, 100, 100);
 }
