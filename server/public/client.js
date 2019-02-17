@@ -19,6 +19,21 @@ function onReady() {
 
     // 'toggle' button
     $('#checklist-container').on('click', '.toggle-button', toggleTodoItem);
+    //  hover / un-hover
+    $('#checklist-container').on('mouseenter', '.toggle-button', mouseEnterTodoItem);
+    $('#checklist-container').on('mouseleave', '.toggle-button', mouseLeaveTodoItem);
+}
+
+function mouseEnterTodoItem() {
+    console.log('mouse enter');
+    
+    this.classList.add('hover');
+}
+
+function mouseLeaveTodoItem() {
+    console.log('mouse leave');
+    
+    this.classList.remove('hover');
 }
 
 // Toggles the 'complete' status of the item. If it's complete, uncompletes,
@@ -30,9 +45,6 @@ function toggleTodoItem() {
 
     const isComplete    = taskBox.data().complete;
     const id            = taskBox.data().id;
-
-    console.log(isComplete);
-    
 
     $.ajax({
         url: `/todo-list/${id}`,
