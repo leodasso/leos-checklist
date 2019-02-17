@@ -141,10 +141,16 @@ function rebuildTodoList(todoArray) {
     container.append(newItemHtml);
 }
 
+
+
 function deleteItem() {
 
     const taskBox = $(this).closest('.task-box');
     const id = taskBox.data().id;
+
+    // confirm deletion
+    let confirmation = window.confirm('Are you sure you want to delete this task?');
+    if (!confirmation) return;
 
     $.ajax({
         url: '/todo-list/' + id,
