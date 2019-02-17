@@ -25,10 +25,14 @@ function onReady() {
     //  hover / un-hover
     $('#checklist-container').on('mouseenter', '.toggle-button', mouseEnterTodoItem);
     $('#checklist-container').on('mouseleave', '.toggle-button', mouseLeaveTodoItem);
-
-    // mousedown mouseup
+    // mousedown / mouseup
     $('#checklist-container').on('mousedown', '.toggle-button', mouseDownTodoItem);
     $('#checklist-container').on('mouseup', '.toggle-button', mouseUpTodoItem);
+
+    // toggle sorting buttons
+    $('#sort-complete-button').on('click', sortByCompleted);
+    $('#sort-default-button').on('click', sortByDefault);
+
 
 }
 
@@ -136,6 +140,24 @@ function sendNewTodo() {
         type: 'POST',
         url: '/todo-list',
         data: newTodo
+    })
+    .then(fetchTodoItems);
+}
+
+function sortByCompleted() {
+    sendSorting('completed');
+}
+
+function sortByDefault() {
+    sendSorting('default');
+}
+
+function sendSorting(sortingType) {
+
+    $.ajax({
+        type: 'PUT',
+        url: '/sorting',
+        data: {sorting: sortingType}
     })
     .then(fetchTodoItems);
 }

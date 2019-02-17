@@ -3,6 +3,7 @@ const bodyParser    = require('body-parser');
 const pool          = require('./modules/pool');
 const app = express();
 const PORT = 5000;
+let sorting = 'default';
 
 
 // Have the express app listen on our port
@@ -16,10 +17,18 @@ app.use(bodyParser({urlencoded: true}));
 
 // Route for the client to get the full list of todos from the database.
 app.get('/todo-list', (req, resp) => {
+
+    // Get the query string. It can be different based on how we want to sort.
+    let queryString = `SELECT * FROM "checklist"`;
+    if (sorting == 'default'){
+        queryString += ` ORDER BY "id";`;
+    }
+    else if (sorting == 'completed') {
+        queryString += ` ORDER BY "complete", "id";`;
+    }
+
     // Query the database for our full todo list
-    pool.query(`
-        SELECT * FROM "checklist"
-        ORDER BY "id";`)
+    pool.query(queryString)
     .then(
         response => {
             resp.send(response.rows);
@@ -120,4 +129,11 @@ app.get('/placeholders', (req, resp) => {
             resp.sendStatus(500);
         }
     )
+});
+
+app.put('/sorting', (req, resp) => {
+
+    sorting = req.body.sorting;
+    console.log('sorting is now', sorting);
+    resp.sendStatus(201);
 });

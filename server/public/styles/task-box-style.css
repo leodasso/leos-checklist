@@ -12,7 +12,7 @@
     border-color: rgba(0, 0, 0, 0);
 
     color: var(--hero-color);
-    transition: .2s;
+    transition: .1s;
     transform: skewX(-12deg);
 }
 
