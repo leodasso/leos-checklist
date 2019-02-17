@@ -58,7 +58,7 @@ input {
 }
 
 input::placeholder {
-    color: var(--hero-color-fade);
+    color: rgb(65, 65, 65);
 }
 
 

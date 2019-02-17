@@ -102,3 +102,22 @@ app.put('/todo-list/:id', (req, resp) => {
         }
     );
 });
+
+// Route for the client to get the full list of placeholders from the database.
+app.get('/placeholders', (req, resp) => {
+
+    pool.query(`
+        SELECT * FROM "placeholders"
+        ORDER BY "id";`)
+    .then(
+        response => {
+            resp.send(response.rows);
+        }
+    )
+    .catch(
+        error => {
+            console.log('error when getting placeholders from database', error);
+            resp.sendStatus(500);
+        }
+    )
+});

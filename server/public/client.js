@@ -1,9 +1,12 @@
 $(document).ready(onReady);
+let placeholderArray = [];
 
 // setup date formatter
 const dateFormat = { year: 'numeric', month: 'long', day: 'numeric' };
 
 function onReady() {
+
+    getPlaceholders();
 
     // fetch the todo list from the server (so it can be populated on the DOM)
     fetchTodoItems();
@@ -25,15 +28,33 @@ function onReady() {
 }
 
 function mouseEnterTodoItem() {
-    console.log('mouse enter');
     
     this.classList.add('hover');
 }
 
 function mouseLeaveTodoItem() {
-    console.log('mouse leave');
     
     this.classList.remove('hover');
+}
+
+// The database has a list of placeholders that we can show in the 
+// input field for creating new tasks. get them here
+function getPlaceholders() {
+
+    $.ajax({
+        url: '/placeholders',
+        type: 'GET'
+    })
+    .then(
+        result => {
+            placeholderArray = result;
+        }
+    ).catch(
+        error => {
+            // TODO tell user there was an error
+            console.log('error communicating with server', error);
+        }
+    );
 }
 
 // Toggles the 'complete' status of the item. If it's complete, uncompletes,
@@ -138,7 +159,27 @@ function rebuildTodoList(todoArray) {
             <button class="new-button">Add</button>
         </div>`;
 
-    container.append(newItemHtml);
+    container.append(getInputHtml());
+}
+
+// returns string that contains the HTML of the input section
+function getInputHtml() {
+
+    let placeholder = 'Create a new to-do';
+
+    // it's not guaranteed that the server has responded with this array yet
+    if (placeholderArray.length > 0) {
+
+        // choose a random placeholder
+        const randIndex = Math.floor(Math.random() * placeholderArray.length);
+        placeholder = placeholderArray[randIndex].text;
+        console.log(placeholder);
+    }
+
+    return `<div class="new-task">
+            <input type="text" id="new-input" placeholder="${placeholder}">
+            <button class="new-button">Add</button>
+        </div>`;
 }
 
 
