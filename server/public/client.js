@@ -4,9 +4,13 @@ $(document).ready(onReady);
 var dateFormat = { year: 'numeric', month: 'long', day: 'numeric' };
 
 function onReady() {
-    console.log('hello');
-    
+
+    // fetch the todo list from the server so it can be populated
+    // when the page loads.
     fetchTodoItems();
+
+    // create a listener for the 'new item' button
+    $('#checklist-container').on('click', '.new-button', sendNewTodo);
 }
 
 // Fetches all the todo items from the server, and calls rebuild
@@ -28,6 +32,33 @@ function fetchTodoItems() {
         }
     );
 
+}
+
+// sends a new todo to the server
+function sendNewTodo() {
+
+    let newInput = $('#new-input');
+    console.log(newInput.val());
+    
+    if (newInput.val() == '') {
+        window.alert('please enter a message for your new to-do!');
+        return;
+    }
+
+    // create a new todo object
+    let todayDate = new Date();
+    let newTodo = {
+        descr: newInput.val(),
+        date: todayDate.toDateString()
+    }
+    
+    // send it to the server
+    $.ajax( {
+        type: 'POST',
+        url: '/todo-list',
+        data: newTodo
+    })
+    .then(fetchTodoItems);
 }
 
 function rebuildTodoList(todoArray) {
@@ -56,7 +87,7 @@ function rebuildTodoList(todoArray) {
     // append the 'new todo' element after all the others
     const newItemHtml = `
         <div class="task-box">
-            <input type="text" placeholder "new To-Do">
+            <input type="text" id="new-input" placeholder "new To-Do">
             <button class="new-button">Add</button>
         </div>`;
 
