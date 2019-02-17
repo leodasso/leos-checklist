@@ -108,13 +108,13 @@ function rebuildTodoList(todoArray) {
         if (element.complete) classes += ' complete';
 
         const html = 
-            `<div class="${classes}" data-id="${element.id}" data-complete="${element.complete}">
-                <button class="toggle-button">Toggle</button>
-                <button class="delete-button">X</button>
-                <div>${formattedDate}</div>
-                <p>${element.descr}</p>
-            </div>
-        `;
+            `<div class="${classes} toggle-button" data-id="${element.id}" data-complete="${element.complete}">
+                <div class="task-date">${formattedDate}</div>
+                <div class="task-box-mainline">
+                    <p>${element.descr}</p>
+                    <button class="delete-button">X</button>
+                </div>
+            </div>`;
 
         container.append(html);
     }

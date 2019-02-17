@@ -27,19 +27,23 @@
 <body class="main">
 
     <!-- header section -->
+    <div class="jumbotron title-area">
+        <p>TO-DOs</p>
+    </div>
+
+    <!-- testing div -->
     <div class="container">
-        <h1>Checklist</h1>
+        <div class="task-box toggle-button" data-id="5" data-complete="true">
+            <div class="task-date">March 1st, 2009</div>
+            <div class="task-box-mainline">
+                <p>Go see Ironman</p>
+                <button class="delete-button">X</button>
+            </div>
+        </div>
     </div>
 
     <!-- checklist -->
     <div class="container" id="checklist-container">
-        <div class="task-box">
-            <button>Complete</button>
-            <div>
-                Oct 9th, 2004
-            </div>
-            <input type="text" value="Do server-side checklist things">
-        </div>
     </div>
 
     <!-- footer -->
@@ -48,6 +52,5 @@
     </div>
 
 </body>
-    
 </body>
 </html>
