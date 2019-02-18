@@ -215,7 +215,11 @@ function getInputHtml() {
 
 
 
-function deleteItem() {
+function deleteItem(event) {
+
+    // stop propogation of the click. The delete button is nested in the list button (i know i know its bad)
+    // so this prevents the toggle from happening if the user cancels the delete
+    event.stopPropagation();
 
     const taskBox = $(this).closest('.task-box');
     const id = taskBox.data().id;
