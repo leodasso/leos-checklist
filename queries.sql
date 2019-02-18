@@ -7,8 +7,6 @@ CREATE TABLE "checklist" (
 	"archived" BOOLEAN NOT NULL DEFAULT 'false'
 );
 
-DROP TABLE "checklist";
-
 -- query for getting all elements
 SELECT * FROM "checklist";
 
