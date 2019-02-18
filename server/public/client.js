@@ -191,12 +191,6 @@ function rebuildTodoList(todoArray) {
     }
 
     // append the 'new todo' element after all the others
-    const newItemHtml = `
-        <div class="new-task">
-            <input type="text" id="new-input" placeholder="new To-Do">
-            <button class="new-button">Add</button>
-        </div>`;
-
     container.append(getInputHtml());
 }
 
